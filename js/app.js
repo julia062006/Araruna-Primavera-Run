@@ -67,7 +67,7 @@ estadoSelect.addEventListener("change", () => {
 });
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwYeYdp1fnGU22pKlvcCLUz6LmfFPF7vhAeyuMQg7rAZHgs8OGzQ3kXeMHWM7L7XJoW/exec";
+  "https://script.google.com/macros/s/AKfycbyhVEEcuY-3h6d2XBn9bUmssF8TAfqqrKBPvToLYoLjsX84ewAIX-3BmHGEljmn7E0NOw/exec";
 
 const form = document.getElementById("inscricaoForm");
 const msg = document.getElementById("msg");
@@ -149,35 +149,41 @@ const diasEl = document.getElementById("dias");
 const horasEl = document.getElementById("horas");
 const minEl = document.getElementById("min");
 const segEl = document.getElementById("seg");
+const countdownEl = document.querySelector(".countdown");
 
 function atualizarContador() {
-  const evento = new Date("2026-07-04T20:00:00");
+  // Se a página não possui contador, não executa nada
+  if (!countdownEl || !diasEl || !horasEl || !minEl || !segEl) {
+    return;
+  }
+
+  const evento = new Date("2026-09-20T08:00:00");
   const agora = new Date();
 
   const diff = evento - agora;
 
   if (diff <= 0) {
-    document.querySelector(".countdown").innerHTML = "<p>O evento começou!</p>";
-
+    countdownEl.innerHTML = "<p>O evento começou!</p>";
     clearInterval(timer);
-
     return;
   }
 
-  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const dias = Math.floor(
+    diff / (1000 * 60 * 60 * 24)
+  );
 
   const horas = Math.floor(
     (diff % (1000 * 60 * 60 * 24)) /
-      (1000 * 60 * 60),
+    (1000 * 60 * 60)
   );
 
   const min = Math.floor(
     (diff % (1000 * 60 * 60)) /
-      (1000 * 60),
+    (1000 * 60)
   );
 
   const seg = Math.floor(
-    (diff % (1000 * 60)) / 1000,
+    (diff % (1000 * 60)) / 1000
   );
 
   diasEl.textContent = String(dias).padStart(2, "0");
